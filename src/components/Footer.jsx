@@ -1,98 +1,133 @@
 // src/components/Footer.jsx
 import React from 'react';
-import { Box, Container, Grid, Typography, Link, IconButton, Divider } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
+import { Box, Container, Typography, Link, IconButton, Divider, Stack } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+
+const navLinks = [
+  { label: 'Inicio', href: '#' },
+  { label: 'Servicios', href: '#services' },
+  { label: 'Nosotros', href: '#about' },
+  { label: 'Clientes', href: '#clients' },
+  { label: 'Contacto', href: '#contact' },
+];
+
+const linkSx = {
+  color: '#8a99aa',
+  fontSize: '0.82rem',
+  fontWeight: 500,
+  letterSpacing: 0.5,
+  textTransform: 'uppercase',
+  transition: 'color 0.2s',
+  '&:hover': { color: '#fff' },
+};
 
 export default function Footer() {
   return (
-    <Box sx={{ bgcolor: '#0a1929', color: 'white', pt: 8, pb: 4 }} component="footer" id="contact">
-      <Container maxWidth="lg">
-        <Grid container spacing={5}>
+    <Box component="footer" sx={{ bgcolor: '#080f1a', color: 'white' }}>
 
-          {/* Columna 1: Información de la Empresa */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="primary.main" gutterBottom sx={{ fontWeight: 'bold' }}>
-              KADMIEL S.M.
-            </Typography>
-            <Typography variant="body2" sx={{ color: '#ccc', mb: 2 }}>
-              Especialistas en soluciones integrales de mantenimiento industrial, obras civiles y proyectos de ingeniería. Calidad y compromiso en cada servicio.
-            </Typography>
-            {/* Redes Sociales */}
-            <Box>
-              <IconButton color="primary" aria-label="Facebook">
-                <FacebookIcon />
-              </IconButton>
-              <IconButton color="primary" aria-label="Instagram">
-                <InstagramIcon />
-              </IconButton>
-              <IconButton color="success" aria-label="WhatsApp">
-                <WhatsAppIcon />
-              </IconButton>
-            </Box>
-          </Grid>
+      {/* FRANJA PRINCIPAL */}
+      <Container maxWidth="lg" sx={{ py: { xs: 5, md: 6 } }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { xs: 'flex-start', md: 'center' },
+          justifyContent: 'space-between',
+          gap: { xs: 5, md: 0 }
+        }}>
 
-          {/* Columna 2: Enlaces Rápidos */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Enlaces Rápidos
+          {/* MARCA */}
+          <Box sx={{ minWidth: '180px' }}>
+            <Typography sx={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: 3, color: '#fff', lineHeight: 1 }}>
+              KADMIEL
+              <Box component="span" sx={{ color: '#1754af' }}> C.A.</Box>
             </Typography>
-            <Link href="#" color="inherit" underline="hover" display="block" sx={{ mb: 1, color: '#ccc' }}>
-              Inicio
-            </Link>
-            <Link href="#services" color="inherit" underline="hover" display="block" sx={{ mb: 1, color: '#ccc' }}>
-              Servicios
-            </Link>
-            <Link href="#about" color="inherit" underline="hover" display="block" sx={{ mb: 1, color: '#ccc' }}>
-              Nosotros
-            </Link>
-            <Link href="#contact" color="inherit" underline="hover" display="block" sx={{ color: '#ccc' }}>
-              Contacto
-            </Link>
-          </Grid>
-
-          {/* Columna 3: Información de Contacto */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Contáctanos
+            <Typography sx={{ color: '#4a5a6a', fontSize: '0.72rem', letterSpacing: 2, mt: 0.5, textTransform: 'uppercase' }}>
+              Ingeniería & Automatización
             </Typography>
+          </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <LocationOnIcon sx={{ mr: 1, color: '#1976d2' }} />
-              <Typography variant="body2" sx={{ color: '#ccc' }}>
-                El Tigre, Edo. Anzoátegui, Venezuela.
+          {/* NAVEGACIÓN — centro */}
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={{ xs: 1.5, sm: 3 }}
+            sx={{ alignItems: { xs: 'flex-start', sm: 'center' } }}
+          >
+            {navLinks.map((l) => (
+              <Link key={l.label} href={l.href} underline="none" sx={linkSx}>
+                {l.label}
+              </Link>
+            ))}
+          </Stack>
+
+          {/* CONTACTO COMPACTO — derecha */}
+          <Stack spacing={1} sx={{ alignItems: { xs: 'flex-start', md: 'flex-end' } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <PhoneIcon sx={{ fontSize: '0.85rem', color: '#1754af' }} />
+              <Typography sx={{ color: '#8a99aa', fontSize: '0.8rem' }}>
+                +58 424-8808637
               </Typography>
             </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <PhoneIcon sx={{ mr: 1, color: '#1976d2' }} />
-              <Typography variant="body2" sx={{ color: '#ccc' }}>
-                +58 424-8808637 / +58 414-8032019
-              </Typography>
-            </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <EmailIcon sx={{ mr: 1, color: '#1976d2' }} />
-              <Typography variant="body2" sx={{ color: '#ccc' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <EmailIcon sx={{ fontSize: '0.85rem', color: '#1754af' }} />
+              <Typography sx={{ color: '#8a99aa', fontSize: '0.8rem' }}>
                 info.servicios@kadmielsm.com
               </Typography>
             </Box>
-          </Grid>
-        </Grid>
-
-        <Divider sx={{ my: 4, bgcolor: 'rgba(255,255,255,0.1)' }} />
-
-        {/* Copyright */}
-        <Typography variant="body2" color="#888" align="center">
-          {'© '}
-          {new Date().getFullYear()}
-          {' Kadmiel Servicios y Mantenimiento. Todos los derechos reservados.'}
-        </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <LocationOnIcon sx={{ fontSize: '0.85rem', color: '#1754af' }} />
+              <Typography sx={{ color: '#8a99aa', fontSize: '0.8rem' }}>
+                El Tigre, Anzoátegui, Venezuela
+              </Typography>
+            </Box>
+          </Stack>
+        </Box>
       </Container>
+
+      <Divider sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
+
+      {/* BARRA INFERIOR */}
+      <Container maxWidth="lg">
+        <Box sx={{
+          py: 2,
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 1
+        }}>
+          <Typography sx={{ color: '#2e3d4d', fontSize: '0.75rem' }}>
+            © {new Date().getFullYear()} Kadmiel C.A. — Todos los derechos reservados.
+          </Typography>
+
+          {/* Íconos sociales */}
+          <Stack direction="row" spacing={0.5}>
+            {[
+              { icon: <FacebookIcon sx={{ fontSize: '1rem' }} />, label: 'Facebook' },
+              { icon: <InstagramIcon sx={{ fontSize: '1rem' }} />, label: 'Instagram' },
+              { icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} />, label: 'WhatsApp' },
+            ].map(({ icon, label }) => (
+              <IconButton
+                key={label}
+                aria-label={label}
+                size="small"
+                sx={{
+                  color: '#2e3d4d',
+                  transition: 'color 0.2s',
+                  '&:hover': { color: '#1754af', bgcolor: 'transparent' }
+                }}
+              >
+                {icon}
+              </IconButton>
+            ))}
+          </Stack>
+        </Box>
+      </Container>
+
     </Box>
   );
 }

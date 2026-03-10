@@ -1,9 +1,11 @@
 // src/components/Navbar.jsx
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import logotipo from '../assets/Logotipo.svg';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,8 +15,26 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
+/**
+ * Componente Navbar rediseñado con efecto de scroll dinámico.
+ * Aparece transparente al inicio y cambia a azul sólido al bajar.
+ */
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Detector de scroll para cambiar el fondo del Navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -24,14 +44,23 @@ export default function Navbar() {
     { label: 'Inicio', href: '#home' },
     { label: 'Servicios', href: '#services' },
     { label: 'Nosotros', href: '#about' },
+    { label: 'Clientes', href: '#clients' },
     { label: 'Contacto', href: '#contact' },
   ];
 
+  // Contenido del menú lateral para móviles
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2, fontWeight: 'bold', color: '#1976d2' }}>
-        Kadmiel
-      </Typography>
+      <Box sx={{ my: 2, display: 'flex', justifyContent: 'center' }}>
+        <img
+          src={logotipo}
+          alt="Kadmiel Logo"
+          style={{
+            height: '50px',
+            filter: 'drop-shadow(0px 0px 5px rgba(0,0,0,0.2))'
+          }}
+        />
+      </Box>
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
@@ -46,8 +75,19 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ backgroundColor: '#1976d2' }}>
-        <Toolbar>
+      <AppBar
+        position="fixed"
+        sx={{
+          // Fondo condicional: transparente al inicio, azul con ligera transparencia al bajar
+          backgroundColor: isScrolled ? '#1754af9e' : 'transparent',
+          boxShadow: isScrolled ? 3 : 'none',
+          transition: 'all 0.3s ease',
+          backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+          backgroundImage: 'none',
+        }}
+      >
+        <Toolbar sx={{ minHeight: '64px' }}>
+          {/* Botón menú móvil */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -58,17 +98,38 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' }, fontWeight: 'bold', letterSpacing: 1 }}
-          >
-            Kadmiel
-          </Typography>
+          {/* Logo pequeño en el Navbar */}
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+            <img
+              src={logotipo}
+              alt="Kadmiel Logo"
+              style={{
+                height: '45px', // Logo discreto en el Navbar
+                cursor: 'pointer',
+                transition: 'transform 0.3s ease',
+                // Brillo blanco sutil si el fondo es transparente
+                filter: isScrolled ? 'none' : 'drop-shadow(0px 0px 8px rgba(255,255,255,0.4))'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onClick={() => window.location.href = '#home'}
+            />
+          </Box>
 
+          {/* Menú de navegación escritorio */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item.label} color="inherit" href={item.href}>
+              <Button
+                key={item.label}
+                color="inherit"
+                href={item.href}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 500,
+                  mx: 1,
+                  '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
+                }}
+              >
                 {item.label}
               </Button>
             ))}
@@ -76,14 +137,14 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer para móviles */}
+      {/* Navegación para dispositivos móviles */}
       <Box component="nav">
         <Drawer
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -93,8 +154,6 @@ export default function Navbar() {
           {drawer}
         </Drawer>
       </Box>
-      {/* Espaciador para que el contenido no quede oculto por el AppBar fixed */}
-      <Toolbar />
     </Box>
   );
 }
