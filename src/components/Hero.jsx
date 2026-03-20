@@ -7,6 +7,8 @@ import Container from '@mui/material/Container';
 import heroBackground from '../assets/Animacion.gif';
 import logotipo from '../assets/Logotipo.svg';
 
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+
 /**
  * Componente Hero inspirado en estilo "Startup".
  * Presenta un logo grande, mensaje impactante y un overlay degradado sobre el GIF.
@@ -96,9 +98,9 @@ export default function Hero() {
               href="#services"
               sx={{
                 backgroundColor: '#1976d2',
-                px: 5,
+                px: 3,
                 py: 2,
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 fontWeight: 'bold',
                 borderRadius: '8px',
                 '&:hover': { backgroundColor: '#1565c0' }
@@ -108,15 +110,35 @@ export default function Hero() {
             </Button>
 
             <Button
+              variant="contained"
+              size="large"
+              component="a"
+              href="/brochure-kadmiel.pdf"
+              download="brochure-kadmiel.pdf"
+              startIcon={<CloudDownloadIcon />}
+              sx={{
+                backgroundColor: '#0c6a0b',
+                px: 3,
+                py: 2,
+                fontSize: '0.9rem',
+                fontWeight: 'bold',
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: '#095408' }
+              }}
+            >
+              Descargar Brochure
+            </Button>
+
+            <Button
               variant="outlined"
               size="large"
               href="#contact"
               sx={{
                 color: '#fff',
                 borderColor: '#fff',
-                px: 5,
+                px: 3,
                 py: 2,
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 fontWeight: 'bold',
                 borderRadius: '8px',
                 borderWidth: '2px',

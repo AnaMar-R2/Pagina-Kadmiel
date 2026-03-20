@@ -10,11 +10,12 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EquipoImg from '../assets/Equipo.svg';
+import Equipo1Img from '../assets/Equipo1.jpg';
 
 export default function About() {
     return (
         <Box sx={{
-            py: { xs: 10, md: 15 },
+            py: { xs: 4, md: 6 },
             backgroundColor: '#f0f7ff',
             position: 'relative',
             overflow: 'hidden',
@@ -23,7 +24,7 @@ export default function About() {
             <Container maxWidth="lg">
 
                 {/* BLOQUE 1: TÍTULO CENTRADO ARRIBA */}
-                <Box sx={{ textAlign: 'center', mb: 12 }}>
+                <Box sx={{ textAlign: 'center', mb: 6 }}>
                     <Typography variant="overline" sx={{ color: '#1754af', fontWeight: 900, letterSpacing: 4, display: 'block', mb: 1 }}>
                         KADMIEL SOLUTIONS
                     </Typography>
@@ -39,47 +40,71 @@ export default function About() {
                     flexDirection: { xs: 'column', md: 'row' }, // Vertical en móvil, Horizontal en desktop
                     alignItems: 'center',
                     gap: { xs: 8, md: 10 },
-                    mb: 18
+                    mb: 10
                 }}>
 
-                    {/* COLUMNA IZQUIERDA: IMÁGENES */}
+                    {/* COLUMNA IZQUIERDA: IMÁGENES (Estilo 3D Superpuesto) */}
                     <Box className='imagenes_about' sx={{ flex: 1, width: '100%', position: 'relative' }}>
-                        <Box sx={{ position: 'relative' }}>
+                        <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            
+                            {/* Imagen Principal (Fondo) */}
+                            <Box
+                                component="img"
+                                src={Equipo1Img}
+                                alt="Ingeniería Kadmiel"
+                                sx={{
+                                    width: '90%',
+                                    borderRadius: '40px',
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                                    zIndex: 1,
+                                    position: 'relative',
+                                    display: 'block'
+                                }}
+                            />
+
+                            {/* Imagen Secundaria (Superpuesta inferior derecha) */}
                             <Box
                                 component="img"
                                 src={EquipoImg}
-                                alt="Ingeniería Kadmiel"
+                                alt="Detalle Técnico"
                                 sx={{
-                                    width: '100%',
-                                    borderRadius: '0',
-                                    boxShadow: '20px 20px 0px rgba(23, 84, 175, 0.1)',
-                                    zIndex: 1,
-                                    position: 'relative'
+                                    width: '50%',
+                                    borderRadius: '30px',
+                                    border: '8px solid #fff',
+                                    boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
+                                    position: 'absolute',
+                                    bottom: '-15%',
+                                    right: '0%',
+                                    zIndex: 3,
                                 }}
                             />
-                            {/* Caja de Experiencia Flotante (3D) */}
-                            <Paper
-                                elevation={10}
+
+                            {/* Caja de Experiencia Flotante (Lado Izquierdo) */}
+                            <Box
                                 sx={{
                                     position: 'absolute',
-                                    bottom: -25,
-                                    left: { xs: 5, md: -25 },
-                                    p: 1.8,
-                                    borderRadius: '0',
-                                    borderLeft: '5px solid #1754af',
-                                    bgcolor: '#fff',
+                                    top: '30%',
+                                    left: '-5%',
+                                    bgcolor: '#1754af',
+                                    color: '#fff',
+                                    p: { xs: 2.5, md: 3.5 },
+                                    borderRadius: '25px',
                                     zIndex: 10,
-                                    minWidth: '140px'
+                                    boxShadow: '0 10px 30px rgba(23, 84, 175, 0.4)',
+                                    textAlign: 'center',
+                                    minWidth: '120px'
                                 }}
                             >
-                                <Typography variant="h2" sx={{ color: '#1754af', fontWeight: 900, lineHeight: 1, fontSize: '2.2rem' }}>+15</Typography>
-                                <Typography variant="h6" sx={{ fontWeight: 800, color: '#0d1b2a', fontSize: '0.75rem', mt: 0.5, textTransform: 'uppercase', letterSpacing: 1 }}>
-                                    Años de <br /> Liderazgo
+                                <Typography sx={{ fontWeight: 900, fontSize: '2.5rem', lineHeight: 1 }}>+20</Typography>
+                                <Typography sx={{ fontWeight: 800, fontSize: '0.7rem', mt: 1, textTransform: 'uppercase', letterSpacing: 1.5 }}>
+                                    AÑOS DE <br /> EXPERIENCIA
                                 </Typography>
-                            </Paper>
+                            </Box>
+
+                            {/* Decoración geométrica */}
                             <Box sx={{
-                                position: 'absolute', top: '-40px', right: '-40px', width: '200px', height: '200px',
-                                borderRight: '12px solid rgba(23, 84, 175, 0.05)', borderTop: '12px solid rgba(23, 84, 175, 0.05)', zIndex: 0
+                                position: 'absolute', top: '-30px', left: '20px', width: '150px', height: '150px',
+                                borderLeft: '8px solid rgba(23, 84, 175, 0.08)', borderTop: '8px solid rgba(23, 84, 175, 0.08)', zIndex: 0
                             }} />
                         </Box>
                     </Box>
@@ -89,13 +114,13 @@ export default function About() {
                         <Typography variant="body1" sx={{ color: '#444', lineHeight: 2.2, fontSize: '1.3rem', fontWeight: 400, borderLeft: '8px solid #1754af', pl: 4 }}>
                             Desde agosto de 2020, <strong>Kadmiel C.A.</strong> redefine la eficiencia en la industria a través de la excelencia en asesoría técnica estratégica e instrumentación avanzada.
                             <br /><br />
-                            Nuestra trayectoria de 15 años garantiza resultados altamente confiables, optimizando sistemas de producción y procesos industriales críticos bajo estándares internacionales.
+                            Nuestra trayectoria de 20 años garantiza resultados altamente confiables, optimizando sistemas de producción y procesos industriales críticos bajo estándares internacionales.
                         </Typography>
                     </Box>
                 </Box>
 
                 {/* BLOQUE 2: MISIÓN Y VISIÓN (PILLS 3D PREMIUM) */}
-                <Box sx={{ mb: 18 }}>
+                <Box sx={{ mb: 10 }}>
                     <Stack spacing={8}>
                         {/* MISIÓN */}
                         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', gap: 0 }}>
@@ -153,7 +178,7 @@ export default function About() {
 
                 {/* BLOQUE 3: ROADMAP DE VALORES (SISTEMA TÉCNICO PRO) - Nuevo diseño zigzag */}
                 <Box>
-                    <Box sx={{ textAlign: 'center', mb: 12 }}>
+                    <Box sx={{ textAlign: 'center', mb: 6 }}>
                         <Typography variant="overline" sx={{ color: '#1754af', fontWeight: 900, letterSpacing: 6, display: 'block', mb: 1 }}>FILOSOFÍA TÉCNICA</Typography>
                         <Typography variant="h2" sx={{ fontWeight: 900, color: '#0d1b2a', fontSize: { xs: '2.3rem', md: '4rem' }, letterSpacing: -1 }}>
                             NUESTROS <Box component="span" sx={{ color: '#1754af' }}>VALORES</Box>

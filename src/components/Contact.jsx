@@ -1,5 +1,5 @@
 // src/components/Contact.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Container,
@@ -13,13 +13,77 @@ import {
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LanguageIcon from '@mui/icons-material/Language';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+
+// CONFIGURACIÓN DE ENVÍO (Web3Forms)
+// 1. Regístrate en https://web3forms.com/
+// 2. Obtén tu "Access Key"
+const WEB3_ACCESS_KEY = '1dfd7158-6ee6-49f9-9ad9-4bdf08f8205c';
 
 export default function Contact() {
+    const [formData, setFormData] = useState({
+        nombre: '',
+        email: '',
+        telefono: '',
+        mensaje: ''
+    });
+    const [submitting, setSubmitting] = useState(false);
+    const [submitResult, setSubmitResult] = useState(null); // 'success' | 'error' | null
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        setSubmitResult(null);
+
+        const payload = {
+            ...formData,
+            access_key: WEB3_ACCESS_KEY,
+            from_name: 'Kadmiel Landing Page',
+            subject: `Nueva solicitud de asesoría de ${formData.nombre}`
+        };
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setSubmitResult('success');
+                setFormData({ nombre: '', email: '', telefono: '', mensaje: '' });
+            } else {
+                console.error('Error de Web3Forms:', data);
+                setSubmitResult('error');
+            }
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            setSubmitResult('error');
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
     return (
         <Box
             id="contact"
+            component="form"
+            onSubmit={handleSubmit}
             sx={{
-                py: { xs: 8, md: 12 },
+                py: { xs: 4, md: 6 },
                 backgroundColor: '#ffffff', // Fondo blanco puro
                 color: '#0d1b2a',
                 position: 'relative',
@@ -91,7 +155,7 @@ export default function Contact() {
                         </Stack>
                         <Stack direction="row" spacing={1} alignItems="center">
                             <AccessTimeIcon sx={{ color: '#1754af', fontSize: '1.2rem' }} />
-                            <Typography variant="body2" sx={{ fontWeight: 600, color: '#333' }}>8:00 AM - 6:00 PM</Typography>
+                            <Typography variant="body2" sx={{ fontWeight: 600, color: '#333' }}>8:00 AM - 5:00 PM</Typography>
                         </Stack>
                         <Stack direction="row" spacing={1} alignItems="center">
                             <LanguageIcon sx={{ color: '#1754af', fontSize: '1.2rem' }} />
@@ -117,33 +181,73 @@ export default function Contact() {
                     <Stack spacing={2}>
                         <TextField
                             fullWidth
+                            name="nombre"
+                            value={formData.nombre}
+                            onChange={handleChange}
                             placeholder="Nombre Completo"
                             variant="outlined"
                             sx={inputStyles}
+                            required
                         />
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
+                                    name="email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     placeholder="Email Corporativo"
                                     variant="outlined"
                                     sx={inputStyles}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
+                                    name="telefono"
+                                    value={formData.telefono}
+                                    onChange={handleChange}
                                     placeholder="WhatsApp / Teléfono"
                                     variant="outlined"
                                     sx={inputStyles}
+                                    required
                                 />
                             </Grid>
                         </Grid>
 
+                        <TextField
+                            fullWidth
+                            name="mensaje"
+                            value={formData.mensaje}
+                            onChange={handleChange}
+                            placeholder="Tu Mensaje"
+                            variant="outlined"
+                            multiline
+                            rows={4}
+                            sx={inputStyles}
+                            required
+                        />
+
+                        {/* Mensajes de Estado */}
+                        {submitResult === 'success' && (
+                            <Typography sx={{ color: '#2e7d32', fontWeight: 600, textAlign: 'center', fontSize: '0.9rem' }}>
+                                ¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.
+                            </Typography>
+                        )}
+                        {submitResult === 'error' && (
+                            <Typography sx={{ color: '#d32f2f', fontWeight: 600, textAlign: 'center', fontSize: '0.9rem' }}>
+                                Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.
+                            </Typography>
+                        )}
+
                         {/* BOTÓN DE ACCIÓN (Prominente como en la foto) */}
                         <Button
                             fullWidth
+                            type="submit"
                             variant="contained"
+                            disabled={submitting}
                             sx={{
                                 bgcolor: '#1754af',
                                 color: '#fff',
@@ -155,11 +259,43 @@ export default function Contact() {
                                     bgcolor: '#11428a',
                                     transform: 'translateY(-2px)'
                                 },
+                                '&:disabled': {
+                                    bgcolor: '#ccc'
+                                },
                                 transition: 'all 0.3s ease',
                                 mt: 1
                             }}
                         >
-                            QUIERO MI ASESORÍA AHORA
+                            {submitting ? 'ENVIANDO...' : 'QUIERO MI ASESORÍA AHORA'}
+                        </Button>
+
+                        <Divider sx={{ my: 1, opacity: 0.5 }}>
+                            <Typography variant="caption" sx={{ color: '#666', fontWeight: 600 }}>O TAMBIÉN PUEDES</Typography>
+                        </Divider>
+
+                        <Button
+                            fullWidth
+                            component="a"
+                            href="/brochure-kadmiel.pdf"
+                            download="brochure-kadmiel.pdf"
+                            variant="outlined"
+                            startIcon={<CloudDownloadIcon />}
+                            sx={{
+                                color: '#c7f2c5ff',
+                                bgcolor: '#1e8b1cff',
+                                py: 1.5,
+                                fontWeight: 800,
+                                fontSize: '1rem',
+                                borderRadius: '8px',
+                                '&:hover': {
+                                    bgcolor: '#117b0fff',
+                                    color: '#ddf5dcff',
+                                    transform: 'translateY(-2px)'
+                                },
+                                transition: 'all 0.3s ease'
+                            }}
+                        >
+                            Descargar Brochure
                         </Button>
                     </Stack>
                 </Box>

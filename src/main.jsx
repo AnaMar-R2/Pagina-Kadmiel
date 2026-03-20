@@ -12,6 +12,8 @@ import '@fontsource/cabin/500.css';
 import '@fontsource/cabin/600.css';
 import '@fontsource/cabin/700.css';
 
+import './index.css';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>

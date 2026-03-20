@@ -8,6 +8,7 @@ import About from './components/About';
 import Clients from './components/Clients';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Projects from './components/Projects';
 
 function App() {
   return (
@@ -16,14 +17,17 @@ function App() {
       <Navbar />
       <Hero />
 
-      {/* Sección Servicios */}
-      <Services />
-
       {/* Sección Nosotros */}
       <About />
 
+      {/* Sección Servicios */}
+      <Services />
+
       {/* Sección Clientes */}
       <Clients />
+
+      {/* Sección Proyectos CREAR */}
+      <Projects />
 
       {/* Sección Contacto */}
       <Contact />

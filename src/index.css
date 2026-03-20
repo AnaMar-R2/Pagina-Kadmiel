@@ -1,4 +1,8 @@
-/* src/index.css */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 64px; /* Altura exacta del Navbar */
+}
+
 * {
   margin: 0;
   padding: 0;

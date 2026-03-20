@@ -7,6 +7,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import logoPrincipalDark from '../assets/logo_principal_dark.svg';
 
 const navLinks = [
   { label: 'Inicio', href: '#' },
@@ -42,12 +43,18 @@ export default function Footer() {
 
           {/* MARCA */}
           <Box sx={{ minWidth: '180px' }}>
-            <Typography sx={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: 3, color: '#fff', lineHeight: 1 }}>
+            <Box
+              component="img"
+              src={logoPrincipalDark}
+              alt="Kadmiel Logo"
+              sx={{ height: 100, mb: 1, display: 'block' }}
+            />
+            <Typography sx={{ fontWeight: 900, fontSize: '1.3rem', letterSpacing: 3, color: '#fff', lineHeight: 1, mt: 1, mb: 0.5 }}>
               KADMIEL
               <Box component="span" sx={{ color: '#1754af' }}> C.A.</Box>
             </Typography>
             <Typography sx={{ color: '#4a5a6a', fontSize: '0.72rem', letterSpacing: 2, mt: 0.5, textTransform: 'uppercase' }}>
-              Ingeniería & Automatización
+              Servicios y Mantenimiento
             </Typography>
           </Box>
 
@@ -107,13 +114,16 @@ export default function Footer() {
           {/* Íconos sociales */}
           <Stack direction="row" spacing={0.5}>
             {[
-              { icon: <FacebookIcon sx={{ fontSize: '1rem' }} />, label: 'Facebook' },
-              { icon: <InstagramIcon sx={{ fontSize: '1rem' }} />, label: 'Instagram' },
+              { icon: <InstagramIcon sx={{ fontSize: '1rem' }} />, label: 'Instagram', href: 'https://www.instagram.com/kadmiel_sm/' },
               { icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} />, label: 'WhatsApp' },
-            ].map(({ icon, label }) => (
+            ].map(({ icon, label, href }) => (
               <IconButton
                 key={label}
                 aria-label={label}
+                component={href ? 'a' : 'button'}
+                href={href}
+                target={href ? '_blank' : undefined}
+                rel={href ? 'noopener noreferrer' : undefined}
                 size="small"
                 sx={{
                   color: '#2e3d4d',
